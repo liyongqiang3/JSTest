@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>任务四：基础JavaScript练习（一）</title>
+	<style type="text/css">
+		li{
+			display: inline-block;
+			background-color: red;
+			color: #f3f6f7;
+			font-size: 20px;
+			text-align: center;
+			padding: 5px;
+			margin: 5px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+<input type="text" name="number" id="inNum">
+<br>
+<button id="btn_left_in">左侧入</button>
+<button id="btn_right_in">右侧入</button>
+<button id="btn_left_out">左侧出</button>
+<button id="btn_right_out">右侧出</button>
+<ul id="outNum"></ul>
+
+<script type="text/javascript">
+	// 绑定变量
+	var inNum = document.getElementById("inNum");
+	var leftInBtn =  document.getElementById("btn_left_in");
+	var rightInBtn =  document.getElementById("btn_right_in");
+	var leftOutBtn =  document.getElementById("btn_left_out");
+	var rightOutBtn =  document.getElementById("btn_right_out");
+	var outNumList = document.getElementById("outNum");
+
+	// 插入数字
+	function insert(direction) {
+	 	if (inNum.value == "") {
+	 		alert("please enter the number string ");
+	 	} else if (!checkNumber(inNum.value)){
+	  		alert("please enter the number");
+
+	 	} else {
+	 		var  addLi = document.createElement("li");
+	 		addLi.innerHTML = inNum.value;
+	 		if (direction == "left") {
+	 			outNumList.insertBefore(addLi,outNumList.firstChild);
+	 		} else {
+	 			outNumList.append(addLi);
+	 		}
+	 		inNum.value = "";
+	 		inNum.focus();
+	 	}
+	 } 
+
+	 // 删除数字
+	 function del (direction){
+
+	 	if (outNumList.childNodes.length < 1) {
+	 		alert("there is no element can be removed");
+	 	} else {
+	 		if (direction == "left") {
+	 			outNumList.removeChild(outNumList.firstChild);
+	 		} else {
+	 			outNumList.removeChild(outNumList.lastChild);
+	 		}
+	 	}
+	 }
+
+
+	// 判断是否为数字
+	function checkNumber(string){
+		var letters = "0123456789";
+		var c;
+		for (var i = string.length - 1; i >= 0; i--) {
+			c = string.charAt(i);
+			if (letters.indexOf(c) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// binding Event
+	leftInBtn.onclick = function(){ insert("left")};
+	rightInBtn.onclick = function(){ insert("right")};
+	leftOutBtn.onclick = function(){ del("left")};
+	rightOutBtn.onclick = function(){ del("right")};
+
+
+
+</script>
+
+</body>
+</html>
