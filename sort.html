@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>IFE javascript Task 01--- Sort</title>
+</head>
+<body>
+
+<ul id="source">
+<li>北京空气质量：<b>90</b></li>
+<li>天津空气质量：<b>70</b></li>
+<li>济南空气质量：<b>60</b></li>
+<li>郑州空气质量：<b>100</b></li>
+<li>上海空气质量：<b>200</b></li>
+<li>深圳空气质量：<b>30</b></li>
+<li>成都空气质量：<b>80</b></li>
+<li>武汉空气质量：<b>110</b></li>
+<li>西安空气质量：<b>90</b></li>
+	
+</ul>
+
+<ul id="resort">
+	 <!-- 
+	    <li>第一名：北京空气质量：<b>90</b></li>
+	    <li>第二名：北京空气质量：<b>90</b></li>
+	    <li>第三名：北京空气质量：<b>90</b></li>
+	     -->
+</ul>
+ <button id="sort-btn">排序</button>
+ <script type="text/javascript">
+ /*
+ * getdata 方法 
+ * 用id得到soure 获取其中城市的名称及名字
+ *  返回一个数组。格式信息
+ */
+
+   function getData() {
+   	// code here 
+   	var sList = document.getElementById("source").getElementsByTagName("li");
+   	var data = [];
+   	for (var i = 0 ; i < sList.length ; i++) {
+   		var city = sList[i].innerHTML.split('空气质量')[0];
+   		var num = sList[i].children[0].innerHTML;
+   		data.push([city,num]);
+
+   	}
+
+   return data;
+
+   }
+
+   // 数据排序
+   function sortAqiData(myData){
+   	 myData.sort(function(a,b){
+   	 	return a[1] - b[1];
+   	 });
+   	 return myData;
+   }
+
+   // 输出新的结果
+   function render(myData){
+		var arr = ['一', '二', '三', '四', '五', '六', '七'];
+		var ul = document.getElementById('resort');
+		for (var i = 0; i < myData.length; i++) {
+			var li = document.createElement('li');
+			li.innerHTML = '底' + arr[i] + '名' + myData[i][0] + '空气质量:' +'<b>' + myData[i][1] +'<b>';
+			ul.appendChild(li);
+		}
+   }
+
+   	//处理事件
+   function btnHandle(){
+   	var myData = getData();
+   	myData = sortAqiData(myData);
+   	render(myData); 
+   	var button = document.getElementById('sort-btn');
+   	button.disabled = 'true';
+   }
+
+   // 绑定点击事件
+   function init (){
+   	// 这下面给sort-btn绑定一个点击事件，点击触发btnHandle
+   	   var button = document.getElementById('sort-btn');
+       button.onclick = function (){
+   		btnHandle();
+   	}
+
+   }
+
+   	// 调用点击事件
+   	init();
+
+ 	
+ </script>
+
+</body>
+</html>
